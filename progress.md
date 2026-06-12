@@ -168,3 +168,15 @@
 
 - 等待用户选择执行方式：Subagent-Driven 或 Inline Execution。
 - 尚未实施计划中的文件创建和代码变更。
+
+### 会话：半自动 LLM-Wiki 增强实施
+
+已开始：
+
+1. 根据 `docs/superpowers/specs/2026-06-12-semi-automatic-llm-wiki-enhancement-design.md` 实施第一版半自动 LLM-Wiki 增强。
+2. 实施范围限定为 workflow 文档、`/wiki-triage` 命令、`wiki/domains/`、`wiki/reports/triage/`、模板、只读轻量 lint 工具和相关测试。
+3. 第一版正式输入范围为 `inbox/*.md`；`raw/` 保留为原始资料目录，但不直接参与 `/wiki-triage` 自动处理。
+
+当前状态：
+
+- 正在创建 workflow、模板、命令和 lint 工具。
