@@ -27,7 +27,7 @@
 
 ## 当前阶段
 
-等待用户选择实施计划执行方式：Subagent-Driven 或 Inline Execution。
+第一阶段脚手架实施进行中：已选择 Subagent-Driven 执行方式，正在创建 inbox/raw/wiki 目录、索引页、模板和搜索说明。
 
 ## 决策记录
 
