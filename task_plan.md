@@ -21,12 +21,13 @@
 | 3. 写入设计文档 | complete | 已写入 `docs/superpowers/specs/2026-06-12-android-framework-knowledge-base-design.md`。 |
 | 4. 用户审阅设计文档 | complete | 用户确认按修正版写入设计文档。 |
 | 5. 接入 GitHub 仓库 | complete | 当前目录已初始化 Git，已创建 `main` 分支并添加远端 `https://github.com/andywangxu/knowledgebase.git`；本地初始提交 `7c9cffa` 已创建，尚未 push。 |
-| 6. 发布到 GitHub | in_progress | 用户确认可执行发布；准备 push 到 `origin/main`。 |
-| 7. 实施计划 | pending | 用户确认设计文档并完成 Git 接入/发布后，再进入实施计划阶段。 |
+| 6. 发布到 GitHub | complete | 用户手动将远端改为 SSH 并成功执行 `git push -u origin main`；远端 `main` 分支已创建并跟踪。 |
+| 7. 实施计划 | complete | 已写入 `docs/superpowers/plans/2026-06-12-android-framework-knowledge-base-scaffold.md`，用于创建第一阶段 Markdown 脚手架。 |
+| 8. 第一阶段脚手架实施 | pending | 等待用户选择执行方式后开始实施。 |
 
 ## 当前阶段
 
-等待用户审阅 `docs/superpowers/specs/2026-06-12-android-framework-knowledge-base-design.md`。
+等待用户选择实施计划执行方式：Subagent-Driven 或 Inline Execution。
 
 ## 决策记录
 

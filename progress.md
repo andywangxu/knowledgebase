@@ -78,10 +78,29 @@
 37. 已创建本地初始提交：`7c9cffa Initial knowledge base design`。
 38. 当前尚未 push 到 GitHub。
 39. 用户确认可以执行发布到 GitHub。
+40. 已提交发布确认记录：`e85e6c6 Record GitHub publish approval`。
+41. 执行 `git push -u origin main` 时被权限层拒绝，未发布到 GitHub。
+42. 用户手动将远端改为 SSH：`git@github.com:andywangxu/knowledgebase.git`。
+43. 用户手动执行 `git push -u origin main` 成功，远端创建 `main` 分支，并设置本地 `main` 跟踪 `origin/main`。
 
 当前状态：
 
-- 准备执行 `git push -u origin main` 发布到 GitHub。
+- GitHub 发布已完成；远端仓库 `github.com:andywangxu/knowledgebase.git` 已包含当前 main 分支内容。
+
+### 会话：第一阶段脚手架实施计划
+
+已完成：
+
+1. 进入 `writing-plans` 阶段。
+2. 根据设计文档编写实施计划：`docs/superpowers/plans/2026-06-12-android-framework-knowledge-base-scaffold.md`。
+3. 实施范围限定为第一阶段 Markdown 脚手架：目录、入口页、索引页、模板和搜索说明。
+4. 未创建实际 Wiki 脚手架内容，未提交或 push 本计划。
+5. 已完成计划自检：覆盖 spec 主要要求，未发现红旗占位符。
+
+当前状态：
+
+- 用户选择 Subagent-Driven 执行方式。
+- 已尝试安装 `obra/superpowers@subagent-driven-development`。安装输出显示 universal skill 已安装到 `~/.agents/skills/subagent-driven-development` 并 symlink 到 Claude Code；同时提示 PromptScript 不支持 global skill installation，报告 `Failed to install 1`。当前会话的可用 skill 列表尚未出现该 skill，因此本会话继续使用现有 Agent 工具模拟 Subagent-Driven 模式执行。
 
 错误记录：
 
