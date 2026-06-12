@@ -133,3 +133,23 @@
 - 第一阶段脚手架完成。
 - 尚未导入真实团队资料、三方资料或历史文档。
 - 下一步可以选择：push 当前 scaffold-implementation 分支并按需要合入 main；或开始导入首批真实资料。
+
+### 会话：半自动 LLM-Wiki 增强方案设计
+
+已完成：
+
+1. 确认采用混合增强方案：流程规范 + slash command + 轻量脚本。
+2. 确认第一版主线为 Inbox triage。
+3. 确认 `/wiki-triage` 第一版只生成建议报告，不直接修改正式 Wiki。
+4. 确认 triage 报告保存到 `wiki/reports/triage/`。
+5. 确认第一版包含只读轻量脚本 `tools/wiki_lint_lite.py`，负责确定性检查。
+6. 确认知识库范围扩展为“以 Android Framework 为核心，但不限于 Framework”，相关技术和前沿技术可受控入库。
+7. 确认新增 `wiki/domains/`，用于独立管理技术领域和前沿方向。
+8. 确认设计需支持柔性治理、渐进收敛和可演进 schema。
+9. 已写入设计文档：`docs/superpowers/specs/2026-06-12-semi-automatic-llm-wiki-enhancement-design.md`。
+10. 已完成设计文档自检：未发现真实占位符、矛盾或超出第一版范围的问题。
+
+当前状态：
+
+- 等待用户审阅半自动 LLM-Wiki 增强方案设计文档。
+- 尚未开始实施 `.claude/commands/`、`tools/`、`wiki/domains/`、`wiki/reports/` 或 workflow/template 文件。
