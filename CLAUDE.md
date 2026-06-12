@@ -12,7 +12,7 @@ The file includes:
 - Static article content in the `<body>`.
 - No external JavaScript, CSS, assets, package manifest, or build system.
 
-There is no detected README, package manager config, test framework, Cursor rules, or Copilot instructions in this repository.
+There is no top-level README, package manager config, test framework, Cursor rules, or Copilot instructions in this repository; `inbox/README.md` exists for inbox-specific guidance.
 
 ## Common Commands
 
