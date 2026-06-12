@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM-Wiki 个人知识库搭建指南</title>
+    <style>
+        :root {
+            --primary: #2584b5;
+            --primary-dark: #1a6a92;
+            --primary-light: rgba(37, 132, 181, 0.08);
+            --bg: #ffffff;
+            --text: #000000;
+            --text-secondary: #595959;
+            --border-color: #e5e5e5;
+            --green: #07c160;
+            --red: #fa5151;
+            --orange: #ff9f1a;
+            --code-bg: #f6f8fa;
+            --section-gap: 48px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrapper {
+            max-width: 677px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* ===== 头部 ===== */
+        .header {
+            padding: 40px 0 24px;
+            text-align: center;
+        }
+        .header .tag-line {
+            display: inline-block;
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: #f0f0f0;
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        .header .desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .header .divider {
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        /* ===== 章节 ===== */
+        .section {
+            padding: var(--section-gap) 0 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .sub-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 28px 0 12px;
+        }
+
+        .para {
+            padding: 8px 0;
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .para-secondary {
+            color: var(--text-secondary);
+        }
+
+        .emphasis {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .hr {
+            border: none;
+            height: 1px;
+            background: var(--border-color);
+            margin: 16px 0;
+        }
+
+        /* ===== 引用/高亮块 ===== */
+        .highlight-block {
+            margin: 20px 0;
+            padding: 12px 16px 12px 20px;
+            border-top: 1px dashed var(--primary);
+            border-bottom: 1px solid var(--primary);
+            border-left: 1px dashed var(--primary);
+            background: var(--primary-light);
+            border-radius: 0;
+        }
+        .highlight-block .hl-title {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 6px;
+            font-size: 15px;
+        }
+        .highlight-block p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        /* ===== 列表 ===== */
+        .list {
+            padding-left: 20px;
+            margin: 12px 0;
+        }
+        .list li {
+            padding: 4px 0;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .list li .emphasis {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .no-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .no-bullet-list li {
+            padding: 6px 0 6px 16px;
+            font-size: 15px;
+            line-height: 1.7;
+            position: relative;
+        }
+        .no-bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 14px;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .numbered-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+            counter-reset: num;
+        }
+        .numbered-list li {
+            padding: 8px 0 8px 32px;
+            font-size: 15px;
+            line-height: 1.7;
+            position: relative;
+            counter-increment: num;
+        }
+        .numbered-list li::before {
+            content: counter(num);
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 22px;
+            height: 22px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== 表格 ===== */
+        .table-wrapper {
+            margin: 16px 0;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        th {
+            background: var(--primary);
+            color: #fff;
+            font-weight: 600;
+            padding: 10px 12px;
+            text-align: left;
+            border: none;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        tr:nth-child(even) td {
+            background: #fafafa;
+        }
+        tr:last-child td {
+            border-bottom: 2px solid var(--primary);
+        }
+
+        /* ===== 代码 ===== */
+        code {
+            background: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'SF Mono', 'JetBrains Mono', 'Menlo', monospace;
+            font-size: 14px;
+            color: var(--primary);
+        }
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 12px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text);
+        }
+
+        /* ===== 流程 ===== */
+        .flow-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .flow-step {
+            background: var(--primary);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .flow-arrow {
+            color: var(--primary);
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* ===== 对比卡片 ===== */
+        .compare-box {
+            margin: 16px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .compare-header {
+            padding: 10px 16px;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .compare-header.old {
+            background: rgba(250, 81, 81, 0.06);
+            color: var(--red);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .compare-header.new {
+            background: rgba(7, 193, 96, 0.06);
+            color: var(--green);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .compare-body {
+            padding: 12px 16px;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .compare-body ul {
+            padding-left: 16px;
+            margin: 0;
+        }
+        .compare-body li {
+            padding: 3px 0;
+            color: var(--text-secondary);
+        }
+
+        /* ===== 标签 ===== */
+        .label {
+            display: inline-block;
+            padding: 1px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .label-green { background: rgba(7,193,96,0.1); color: var(--green); }
+        .label-red { background: rgba(250,81,81,0.1); color: var(--red); }
+        .label-orange { background: rgba(255,159,26,0.1); color: var(--orange); }
+        .label-blue { background: rgba(37,132,181,0.1); color: var(--primary); }
+
+        /* ===== 参考链接 ===== */
+        .ref-item {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .ref-item:last-child { border-bottom: none; }
+        .ref-item a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .ref-item a:hover { text-decoration: underline; }
+        .ref-item .ref-tag {
+            display: inline-block;
+            padding: 1px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            background: rgba(37,132,181,0.1);
+            color: var(--primary);
+            margin: 4px 0;
+        }
+        .ref-item .ref-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            line-height: 1.6;
+        }
+
+        /* ===== 底部 ===== */
+        .footer {
+            padding: 32px 0 48px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .footer .footer-line {
+            width: 30px;
+            height: 2px;
+            background: var(--border-color);
+            margin: 0 auto 16px;
+        }
+
+        /* ===== 场景演示框 ===== */
+        .demo-box {
+            margin: 16px 0;
+            padding: 16px;
+            background: #fafafa;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+        .demo-box .demo-q {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .demo-box .demo-a {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+        }
+
+        /* ===== Before/After ===== */
+        .ba-item {
+            margin: 16px 0;
+            padding: 16px;
+            background: #fafafa;
+            border-radius: 4px;
+            border-left: 3px solid var(--border-color);
+        }
+        .ba-item .ba-scenario {
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        .ba-item .ba-before {
+            font-size: 14px;
+            color: var(--red);
+            line-height: 1.6;
+        }
+        .ba-item .ba-before::before {
+            content: 'Before: ';
+            font-weight: bold;
+        }
+        .ba-item .ba-after {
+            font-size: 14px;
+            color: var(--green);
+            line-height: 1.6;
+            margin-top: 4px;
+        }
+        .ba-item .ba-after::before {
+            content: 'After: ';
+            font-weight: bold;
+        }
+
+        /* ===== Obsidian 集成 ===== */
+        .obsidian-steps {
+            margin: 16px 0;
+        }
+        .obsidian-step {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            align-items: flex-start;
+        }
+        .obsidian-step .step-num {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .obsidian-step .step-content {
+            flex: 1;
+        }
+        .obsidian-step .step-content .step-title {
+            font-weight: bold;
+            font-size: 15px;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .obsidian-step .step-content .step-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 480px) {
+            .wrapper { padding: 0 12px; }
+            .header h1 { font-size: 22px; }
+            .section-title { font-size: 18px; }
+            .flow-steps { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+<!-- ===== 头部 ===== -->
+<div class="header">
+    <div class="tag-line">AI 知识管理新方法</div>
+    <h1>LLM-Wiki 个人知识库<br>搭建与使用指南</h1>
+    <p class="desc">用自然语言对话的方式，构建属于自己的第二大脑<br>概念源自 Andrej Karpathy</p>
+    <div class="divider"></div>
+</div>
+
+<!-- ===== 01 痛点 ===== -->
+<div class="section">
+    <div class="section-title">01  个人知识管理的痛点</div>
+
+    <p class="para">每个人的资料收藏都在不断增长——收藏的文章、下载的 PDF、会议笔记、技术文档。但当资料越来越多，我们往往会发现一个矛盾：</p>
+
+    <p class="para"><span class="emphasis">知识在膨胀，但管理能力没有跟上。</span></p>
+
+    <p class="para">具体表现为五个方面：</p>
+
+    <ul class="no-bullet-list">
+        <li><span class="emphasis">找不到</span>——收藏的文章、笔记散落在各处，用的时候翻不到</li>
+        <li><span class="emphasis">记不住</span>——看过就忘，下次遇到同样的问题还要重新搜索</li>
+        <li><span class="emphasis">信不过</span>——不同来源说法矛盾，不知道信哪个</li>
+        <li><span class="emphasis">理不动</span>——整理笔记费时，越攒越多，最后放弃</li>
+        <li><span class="emphasis">查得慢</span>——查一个数据要打开十几个文件</li>
+    </ul>
+
+    <div class="highlight-block">
+        <p class="hl-title">核心命题</p>
+        <p>当个人收集的资料越来越多时，传统笔记方式无法应对知识膨胀。需要一种<span class="emphasis">"用对话管理知识"</span>的新范式。</p>
+    </div>
+</div>
+
+<!-- ===== 02 什么是 LLM-Wiki ===== -->
+<div class="section">
+    <div class="section-title">02  什么是 LLM-Wiki？</div>
+
+    <p class="para">LLM-Wiki 是一个<span class="emphasis">基于大语言模型的个人知识库系统</span>。概念源自 Andrej Karpathy（前 Tesla AI 总监、OpenAI 联合创始人）提出的 "LLM Wiki" 模式。</p>
+
+    <p class="para">它的核心思想很简单：<span class="emphasis">用 AI 自动读取、编写、维护结构化的 Markdown 知识库</span>，而不是靠人手动整理。</p>
+
+    <p class="para">你只需要通过四个 Slash Commands 就能完成所有操作：</p>
+
+    <ul class="no-bullet-list">
+        <li><code>/wiki-ingest raw/doc.pdf</code> —— 导入文档，AI 自动提取、整理、索引</li>
+        <li><code>/wiki-query 你的问题</code> —— 自然语言提问，系统智能路由回答</li>
+        <li><code>/wiki-lint</code> —— 健康检查，自动检测并修复问题</li>
+        <li><code>/wiki-graph</code> —— 构建知识图谱，可视化知识关联</li>
+    </ul>
+
+    <p class="para">当然，也可以直接用自然语言描述需求，AI 会自动识别并执行对应工作流。</p>
+
+    <p class="para sub-title" style="font-size:15px; font-weight:normal; margin-top: 20px;">来源可追溯，不"幻觉"</p>
+
+    <p class="para">LLM-Wiki 遵循<span class="emphasis">来源优先原则</span>——这是区别于普通 AI 对话的关键：</p>
+
+    <ul class="no-bullet-list">
+        <li><span class="emphasis">资料中有</span> —— 引用具体页面来源（<code>[[wikilink]]</code>）</li>
+        <li><span class="emphasis">资料中没有</span> —— 明确告知"资料中未提及"，不会编造</li>
+        <li><span class="emphasis">原文档回溯</span> —— wiki 信息不足时，回到原始 PDF/PPTX/Excel 提取细节</li>
+    </ul>
+
+    <div class="highlight-block">
+        <p class="hl-title">Karpathy 模式核心</p>
+        <p>传统笔记是为人类浏览写的，LLM-Wiki 是为 AI 推理优化的。文档结构精简、语义明确、链接可解析，让 AI 能高效理解、推理和回答。每条回答都带引用，可随时追溯到原始来源。</p>
+    </div>
+</div>
+
+<!-- ===== 03 核心能力与工作流 ===== -->
+<div class="section">
+    <div class="section-title">03  核心能力与工作流</div>
+
+    <p class="para emphasis" style="font-size:17px;">六大核心能力</p>
+
+    <ul class="numbered-list">
+        <li><span class="emphasis">自然语言导入</span>——丢入文档，AI 自动提取摘要、建立实体页和概念页、更新索引</li>
+        <li><span class="emphasis">智能查询</span>——用自然语言提问，系统自动选择最佳路径回答，每条回答带来源引用</li>
+        <li><span class="emphasis">自我健康检查</span>——自动检测断链、孤儿页面、矛盾内容，生成报告并自动修复</li>
+        <li><span class="emphasis">知识图谱</span>——自动提取语义关系，构建可视化图谱，发现隐藏的知识关联</li>
+        <li><span class="emphasis">版本控制</span>——每次操作自动提交 Git，完整变更历史，可随时回溯</li>
+        <li><span class="emphasis">AI 优化存储</span>——文档结构为 AI 推理优化，相比 RAG 可减少约 95% 的 Token 消耗</li>
+    </ul>
+
+    <p class="para sub-title" style="font-size:17px;">工作流详解</p>
+
+    <p class="para emphasis">导入（Ingest）</p>
+    <p class="para">输入 <code>/wiki-ingest raw/my-document.pdf</code>，AI 自动完成：</p>
+    <ol class="numbered-list">
+        <li>读取源文档全文</li>
+        <li>提取关键信息，写入摘要页</li>
+        <li>创建/更新实体页（人、公司、项目、产品）</li>
+        <li>创建/更新概念页（技术、框架、方法）</li>
+        <li>自动更新全局综合摘要</li>
+        <li>检测与现有内容的矛盾</li>
+        <li>更新索引和日志，自动提交版本</li>
+    </ol>
+
+    <p class="para emphasis">查询（Query）</p>
+    <p class="para">输入 <code>/wiki-query 你的问题</code>，系统智能路由：</p>
+
+    <div class="table-wrapper">
+        <table>
+            <tr><th>查询类型</th><th>路径</th><th>Token 消耗</th></tr>
+            <tr><td>结构化数据（规格/参数/性能）</td><td><span class="emphasis">数据库</span></td><td><span class="label label-green">几乎为零</span></td></tr>
+            <tr><td>概念解释 / 技术分析</td><td><span class="emphasis">Wiki</span></td><td><span class="label label-green">低</span></td></tr>
+            <tr><td>跨文档对比 / 开放分析</td><td><span class="emphasis">Agent</span></td><td><span class="label label-orange">中</span></td></tr>
+        </table>
+    </div>
+
+    <p class="para emphasis">健康检查（Lint）</p>
+    <p class="para">自动检测：孤儿页面、断链、矛盾、过期摘要、缺失实体页、数据缺口，生成报告并自动修复。</p>
+
+    <p class="para emphasis">知识图谱（Graph）</p>
+    <ul class="no-bullet-list">
+        <li>Pass 1：解析所有页面链接 —— 确定性关系边（零 Token）</li>
+        <li>Pass 2：AI 推断语义关系（依赖、矛盾、扩展等）</li>
+        <li>社区检测自动聚类（Louvain 算法，零 Token）</li>
+        <li>输出交互式 HTML 可视化</li>
+    </ul>
+
+    <p class="para sub-title" style="font-size:17px;">场景演示</p>
+
+    <p class="para emphasis">场景一：导入一份新文档</p>
+    <div class="demo-box">
+        <div class="demo-q">你：/wiki-ingest raw/new-article.pdf</div>
+        <div class="demo-a">系统：[自动完成]
+  - 读取 raw/new-article.pdf 全文
+  - 提取关键信息 -> wiki/sources/new-article.md
+  - 创建/更新相关实体页和概念页
+  - 更新全局摘要 index.md 和 overview.md
+  - 检测与现有内容的矛盾（如有则标记）
+  - 自动提交: "ingest | 新技术文章"</div>
+    </div>
+
+    <p class="para emphasis">场景二：用自然语言提问</p>
+    <div class="demo-box">
+        <div class="demo-q">你：/wiki-query 这个系统的核心架构是什么？</div>
+        <div class="demo-a">系统：根据 wiki/index.md 和架构相关页面，
+该系统由两层组成：
+
+源文档层（raw/）——不可变的原始文件
+知识层（wiki/）——AI 提取的结构化知识
+
+关键架构设计包括...
+性能指标如下...
+
+来源：[[系统架构]] [[架构设计]] [[性能分析]]</div>
+    </div>
+
+    <p class="para emphasis">场景三：查找特定参数</p>
+    <div class="demo-box">
+        <div class="demo-q">你：/wiki-query 某模块的传感器参数有哪些？</div>
+        <div class="demo-a">系统：[通过 SQLite 数据库查询，Token 消耗 ~0]
+找到 N 条传感器相关参数：
+- SENSOR_TYPE_A (ID: 0x123, 上行通道)
+- SENSOR_TYPE_B (ID: 0x124, 上行通道)
+
+来源：[[技术规格文档]]</div>
+    </div>
+
+    <p class="para emphasis">场景四：知识健康检查</p>
+    <div class="demo-box">
+        <div class="demo-q">你：/wiki-lint</div>
+        <div class="demo-a">系统：Wiki 健康检查报告
+  - 页面总数: 373
+  - 断链: 2 处（已自动修复）
+  - 孤儿页面: 0
+  - 矛盾内容: 1 处（待确认）
+  - 过期摘要: 0
+
+自动提交: "lint | Wiki health check (373 pages)"</div>
+    </div>
+
+    <p class="para emphasis">场景五：构建知识图谱</p>
+    <div class="demo-box">
+        <div class="demo-q">你：/wiki-graph</div>
+        <div class="demo-a">系统：[知识图谱构建完成]
+  - Pass 1: 提取 611 个页面的 [[wikilink]] 关系
+  - Pass 2: AI 推断语义关系（依赖、矛盾、扩展等）
+  - Louvain 社区检测: 12 个社区
+  - 输出: graph/graph.json (611 nodes, 3588 edges)
+  - 输出: graph/graph.html (交互式可视化)
+
+自动提交: "graph | Knowledge graph rebuilt"</div>
+    </div>
+</div>
+
+<!-- ===== 04 效果对比 ===== -->
+<div class="section">
+    <div class="section-title">04  效果对比</div>
+
+    <p class="para">以下是真实使用场景的 Before / After 对比：</p>
+
+    <div class="ba-item">
+        <div class="ba-scenario">学习新技术：快速理解一个领域</div>
+        <div class="ba-before">收藏了几十篇文章和 PDF，但从未系统整理，问起来还是要重新搜索</div>
+        <div class="ba-after">一次性导入所有资料，直接问"这个技术的核心是什么"，获得带来源的完整摘要</div>
+    </div>
+
+    <div class="ba-item">
+        <div class="ba-scenario">查找特定数据（参数、规格、配置）</div>
+        <div class="ba-before">打开几十个表格和文档，逐个搜索，耗时还可能遗漏</div>
+        <div class="ba-after">一句话提问，秒级返回精确结果，附带数据出处</div>
+    </div>
+
+    <div class="ba-item">
+        <div class="ba-scenario">对比两个方案或产品</div>
+        <div class="ba-before">手动翻阅多份文档，逐条对照，容易漏掉差异</div>
+        <div class="ba-after">自动对比生成差异表，覆盖各维度要点</div>
+    </div>
+
+    <div class="ba-item">
+        <div class="ba-scenario">新文章/新资料入库</div>
+        <div class="ba-before">手动阅读、提炼要点、记笔记、归档，越攒越不想整理</div>
+        <div class="ba-after">一句话导入，自动完成摘要提取、分类、索引更新、矛盾检测</div>
+    </div>
+
+    <div class="ba-item">
+        <div class="ba-scenario">发现资料矛盾</div>
+        <div class="ba-before">写方案时才发现两份资料说法不一致，之前完全没注意到</div>
+        <div class="ba-after">导入时自动标记矛盾，查询时提示证据强度，将困惑前置</div>
+    </div>
+
+    <div class="ba-item">
+        <div class="ba-scenario">构建个人知识体系</div>
+        <div class="ba-before">碎片化阅读了很多内容，但知识之间没有关联，形不成体系</div>
+        <div class="ba-after">知识图谱自动发现概念之间的关系，帮助建立系统性理解</div>
+    </div>
+
+    <p class="para sub-title" style="font-size:15px; font-weight:normal; color: var(--text-secondary); margin-top: 24px;">量化收益（估算）</p>
+
+    <div class="table-wrapper">
+        <table>
+            <tr><th>场景</th><th>传统方式</th><th>LLM-Wiki</th><th>提升</th></tr>
+            <tr><td>理解一个新领域</td><td>数天 ~ 数周</td><td>数分钟 ~ 数小时</td><td><span class="label label-green">10x+</span></td></tr>
+            <tr><td>查找特定数据</td><td>10~30 分钟</td><td>数秒</td><td><span class="label label-green">100x+</span></td></tr>
+            <tr><td>新资料入知识库</td><td>30 分钟 ~ 1 小时</td><td>数分钟</td><td><span class="label label-green">10x+</span></td></tr>
+            <tr><td>方案对比分析</td><td>1~3 小时</td><td>数分钟</td><td><span class="label label-green">20x+</span></td></tr>
+            <tr><td>重复调研</td><td>重新来过</td><td>直接复用已有结论</td><td><span class="label label-green">从 0 到 1</span></td></tr>
+        </table>
+    </div>
+
+    <p class="para sub-title" style="font-size:17px;">为什么 LLM-Wiki 比传统方案更好？</p>
+
+    <p class="para">LLM-Wiki 概念由 Andrej Karpathy 提出并在社区引起广泛讨论。以下是与常见方案的对比：</p>
+
+    <p class="para emphasis">与 Naive RAG（传统向量检索）对比</p>
+
+    <div class="compare-box">
+        <div class="compare-header old">Naive RAG</div>
+        <div class="compare-body">
+            <ul>
+                <li>将文档切片为 vector chunks，靠余弦相似度检索</li>
+                <li>容易检索到无关片段，丢失上下文</li>
+                <li>每次查询都需要加载大量 tokens</li>
+                <li>结构化数据（数字、表格）表现差</li>
+                <li>需要维护向量数据库和 embedding 服务</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="compare-box">
+        <div class="compare-header new">LLM-Wiki（结构化知识）</div>
+        <div class="compare-body">
+            <ul>
+                <li>AI 主动构建结构化知识，而非被动检索</li>
+                <li>每个知识点有明确的位置和引用链</li>
+                <li>渐进式加载，<span class="emphasis">减少约 95% Token 消耗</span></li>
+                <li>SQLite 处理结构化数据，精确返回数字</li>
+                <li>纯 Markdown 文件 + Git，零运维</li>
+            </ul>
+        </div>
+    </div>
+
+    <p class="para emphasis" style="margin-top: 20px;">与传统笔记工具（Obsidian / Notion）对比</p>
+
+    <div class="table-wrapper">
+        <table>
+            <tr><th>维度</th><th>Obsidian / Notion</th><th>LLM-Wiki</th></tr>
+            <tr><td>知识构建</td><td>人工编写为主</td><td><span class="emphasis">AI 自动提取+整理</span></td></tr>
+            <tr><td>文档导入</td><td>手动粘贴/导入</td><td><span class="emphasis">自动读取 PDF/PPTX/Excel</span></td></tr>
+            <tr><td>知识维护</td><td>手动整理断链</td><td><span class="emphasis">Lint 自动检测+修复</span></td></tr>
+            <tr><td>知识查询</td><td>关键词搜索</td><td><span class="emphasis">自然语言问答</span></td></tr>
+            <tr><td>知识关联</td><td>手动加链接</td><td><span class="emphasis">自动提取+图谱构建</span></td></tr>
+            <tr><td>矛盾检测</td><td>无</td><td><span class="emphasis">自动检测+报告</span></td></tr>
+            <tr><td>结构化数据</td><td>表格手动维护</td><td><span class="emphasis">SQLite 自动查询</span></td></tr>
+        </table>
+    </div>
+
+    <p class="para emphasis" style="margin-top: 20px;">全方位对比总结</p>
+
+    <div class="table-wrapper">
+        <table>
+            <tr><th>维度</th><th>传统笔记</th><th>RAG / 向量库</th><th>LLM-Wiki</th></tr>
+            <tr><td>知识录入</td><td>手动</td><td>自动切片</td><td><span class="emphasis">AI 自动提取+整理</span></td></tr>
+            <tr><td>知识查询</td><td>关键词搜索</td><td>向量检索</td><td><span class="emphasis">自然语言+智能路由</span></td></tr>
+            <tr><td>精确性</td><td>高（人工确认）</td><td>中（相似度匹配）</td><td><span class="emphasis">高（来源引用）</span></td></tr>
+            <tr><td>Token 效率</td><td>N/A</td><td>低（全量加载）</td><td><span class="emphasis">高（渐进式，-95%）</span></td></tr>
+            <tr><td>自我维护</td><td>无</td><td>无</td><td><span class="emphasis">Lint 自动修复</span></td></tr>
+            <tr><td>版本控制</td><td>内置历史</td><td>无</td><td><span class="emphasis">Git 完整版本</span></td></tr>
+            <tr><td>部署成本</td><td>订阅费</td><td>向量库+服务</td><td><span class="emphasis">Git 仓库（免费）</span></td></tr>
+            <tr><td>为 AI 优化</td><td><span class="label label-red">否</span></td><td><span class="label label-orange">部分</span></td><td><span class="label label-green">是</span></td></tr>
+        </table>
+    </div>
+
+    <div class="highlight-block">
+        <p>LLM-Wiki 不是要替代 RAG 或笔记工具，而是<span class="emphasis">补足了它们的短板</span>——RAG 的精确性不足、传统笔记的维护成本过高。LLM-Wiki 用<span class="emphasis">"文件系统即数据库"</span>的极简哲学，把 Wiki 的精确性和 AI 的理解力结合起来。</p>
+    </div>
+</div>
+
+<!-- ===== 05 系统架构 ===== -->
+<div class="section">
+    <div class="section-title">05  系统架构</div>
+
+    <p class="para">整个系统由两层组成：</p>
+
+    <div class="highlight-block">
+        <p class="hl-title">源文档层（raw/）</p>
+        <p>不可变的原始文件——PDF、PPTX、Excel、网页等。只读不写，保证数据安全性。</p>
+    </div>
+
+    <div class="highlight-block">
+        <p class="hl-title">知识层（wiki/）</p>
+        <p>AI 从源文档中提取、整理、生成的结构化知识，包括摘要页、实体页、概念页、全局索引和综合摘要。</p>
+    </div>
+
+    <p class="para sub-title" style="font-size:15px; font-weight:normal; color: var(--text-secondary);">数据流</p>
+
+    <div class="flow-steps">
+        <span class="flow-step">源文档</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">AI 读取分析</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">知识层构建</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">索引+图谱</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step">版本控制</span>
+    </div>
+
+    <p class="para">配合 <span class="emphasis">SQLite 数据库</span>处理结构化数据查询（信号、参数、性能指标），配合 <span class="emphasis">渐进式加载</span>避免上下文膨胀——只读与查询相关的页面，减少约 80% 无关内容。</p>
+
+    <p class="para sub-title" style="font-size:15px; font-weight:normal; color: var(--text-secondary); margin-top: 16px;">目录结构</p>
+
+    <div class="demo-box">
+        <div class="demo-a">my-wiki/
+├── raw/              # 不可变源文档（PDF/PPTX/Excel/MD）
+├── wiki/             # AI 生成的知识层
+│   ├── index.md      # 全页面索引
+│   ├── overview.md   # 全局综合摘要
+│   ├── log.md        # 操作日志（追加式）
+│   ├── sources/      # 每份源文档的摘要页
+│   ├── entities/     # 人、公司、项目、产品
+│   ├── concepts/     # 概念、框架、方法
+│   └── syntheses/    # 保存的查询分析结果
+├── graph/            # 知识图谱（graph.json + graph.html）
+├── tools/            # 本地工具脚本（db_query.py, build_graph.py）
+├── data/             # SQLite 数据库文件
+├── .claude/
+│   └── commands/     # Slash Commands（wiki-ingest/query/lint/graph）
+└── CLAUDE.md         # 工作流配置（AI 的"大脑指令"）</div>
+    </div>
+</div>
+
+<!-- ===== 06 搭建指南 ===== -->
+<div class="section">
+    <div class="section-title">06  LLM-Wiki 技能安装方法</div>
+
+    <p class="para">直接 clone 本项目作为你的知识库起点，已包含完整的技能配置：</p>
+
+    <div class="demo-box">
+        <div class="demo-a"># clone 本项目
+git clone https://github.com/SamurAIGPT/llm-wiki-agent.git my-wiki
+cd my-wiki
+
+# 清空示例数据（保留 .claude/ 和 CLAUDE.md）
+rm -rf raw/* wiki/* graph/*
+
+# 放入你自己的文档
+mkdir -p raw
+cp /path/to/your-doc.pdf raw/</div>
+    </div>
+
+    <p class="para">本项目已包含以下文件，clone 后开箱即用：</p>
+
+    <ul class="no-bullet-list">
+        <li><code>.claude/commands/wiki-ingest.md</code> —— <code>/wiki-ingest</code> 导入文档</li>
+        <li><code>.claude/commands/wiki-query.md</code> —— <code>/wiki-query</code> 自然语言提问</li>
+        <li><code>.claude/commands/wiki-lint.md</code> —— <code>/wiki-lint</code> 健康检查</li>
+        <li><code>.claude/commands/wiki-graph.md</code> —— <code>/wiki-graph</code> 构建知识图谱</li>
+        <li><code>CLAUDE.md</code> —— 完整工作流规则定义</li>
+    </ul>
+
+    <div class="highlight-block">
+        <p class="hl-title">前置条件</p>
+        <p>已安装 Claude Code（<code>npm i -g @anthropic-ai/claude-code</code>）并配置好 API Key。创建 <code>raw/</code> 和 <code>wiki/</code> 目录后即可开始使用导入和查询功能。数据库和图谱构建是可选增强。</p>
+    </div>
+</div>
+
+<!-- ===== 07 与 Obsidian 集成 ===== -->
+<div class="section">
+    <div class="section-title">07  与 Obsidian 集成</div>
+
+    <p class="para">LLM-Wiki 的 <code>wiki/</code> 目录本身就是标准 Markdown 文件，可以直接作为 Obsidian 的 Vault 使用。集成后你可以获得：</p>
+
+    <ul class="no-bullet-list">
+        <li><span class="emphasis">双向链接可视化</span>——Obsidian 原生支持 <code>[[wikilink]]</code> 语法，自动展示知识关联图</li>
+        <li><span class="emphasis">实时预览编辑</span>——在 Obsidian 中直接浏览和编辑 wiki 页面</li>
+        <li><span class="emphasis">标签系统</span>——利用 frontmatter 中的 <code>tags</code> 字段进行分类筛选</li>
+        <li><span class="emphasis">本地离线访问</span>——所有数据在本地，无需联网即可查看知识库</li>
+    </ul>
+
+    <p class="para sub-title" style="font-size:15px; font-weight:normal; margin-top: 20px;">基本配置步骤</p>
+
+    <div class="obsidian-steps">
+        <div class="obsidian-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <div class="step-title">打开 Obsidian Vault</div>
+                <div class="step-desc">在 Obsidian 中选择 "Open folder as vault"，将项目的 <code>wiki/</code> 目录（或项目根目录）设为 Obsidian 的 Vault。这样 Obsidian 就能识别所有 Markdown 文件和 <code>[[wikilink]]</code> 链接。</div>
+            </div>
+        </div>
+        <div class="obsidian-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <div class="step-title">配置 Obsidian 别名（可选）</div>
+                <div class="step-desc">如果你希望用中文别名访问英文页面，可以在 wiki 页面的 frontmatter 中添加 <code>aliases</code> 字段。例如在 <code>MT8678.md</code> 中添加 <code>aliases: [MTK8678]</code>，即可通过 <code>[[MTK8678]]</code> 访问同一页面。</div>
+            </div>
+        </div>
+        <div class="obsidian-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <div class="step-title">启用 Graph View</div>
+                <div class="step-desc">在 Obsidian 左侧面板点击 "Graph view" 图标，即可看到基于 <code>[[wikilink]]</code> 构建的知识图谱。这与 LLM-Wiki 自动生成的 <code>graph/graph.html</code> 互补——Obsidian 展示的是静态链接关系，graph.html 包含 AI 推断的语义关系。</div>
+            </div>
+        </div>
+        <div class="obsidian-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+                <div class="step-title">Git 插件同步（推荐）</div>
+                <div class="step-desc">安装 Obsidian 的 <a href="https://github.com/denolehov/obsidian-git" target="_blank">obsidian-git</a> 插件，设置自动提交。这样在 Obsidian 中手动编辑的页面也会通过 Git 同步，与 Claude Code 自动生成的内容保持一致。</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="highlight-block">
+        <p class="hl-title">目录对应关系</p>
+        <p>Obsidian Vault 根目录 → 项目根目录（或 <code>wiki/</code> 子目录）。两种方式均可：如果 Vault 指向项目根目录，Obsidian 可以看到 raw/ 和 wiki/ 的完整结构；如果只指向 wiki/ 子目录，则专注于知识层的浏览和编辑。</p>
+    </div>
+</div>
+
+<!-- ===== 08 成本说明 ===== -->
+<div class="section">
+    <div class="section-title">08  成本说明（API Key + Tokens）</div>
+
+    <div class="highlight-block">
+        <p class="hl-title">必要前提</p>
+        <p>LLM-Wiki 需要大语言模型的 API 支持，<span class="emphasis">必须购买并配置 API Key</span>。推荐使用 Claude（Anthropic）系列模型，也支持其他兼容 API 的 LLM。所有 AI 操作（导入、查询、Lint、图谱构建）都会消耗 Tokens。</p>
+    </div>
+
+    <p class="para emphasis">Token 消耗场景</p>
+
+    <div class="table-wrapper">
+        <table>
+            <tr><th>操作</th><th>Token 消耗级别</th><th>说明</th></tr>
+            <tr><td>导入文档（Ingest）</td><td><span class="label label-orange">高</span></td><td>需要读取完整文档 + 提取摘要 + 创建多个页面</td></tr>
+            <tr><td>查询（Query）</td><td><span class="label label-green">低 ~ 中</span></td><td>渐进式加载只读相关页面；DB 查询几乎不消耗 Tokens</td></tr>
+            <tr><td>知识图谱构建</td><td><span class="label label-orange">高</span></td><td>需要分析所有页面的语义关系</td></tr>
+            <tr><td>健康检查（Lint）</td><td><span class="label label-green">低</span></td><td>主要靠脚本检查，AI 只参与矛盾检测</td></tr>
+        </table>
+    </div>
+
+    <p class="para emphasis">成本优化策略</p>
+
+    <ul class="no-bullet-list">
+        <li><span class="emphasis">渐进式加载</span>——三级索引体系，只加载与查询相关的页面，减少约 80% 无关内容</li>
+        <li><span class="emphasis">结构化查询优先</span>——数字、规格等结构化数据走 SQLite DB，几乎零 Token 消耗</li>
+        <li><span class="emphasis">增量图谱构建</span>——使用 SHA256 缓存，只处理变更的页面，避免全量重建</li>
+        <li><span class="emphasis">模型分级使用</span>——Ingest 用大模型（高质量提取），Query 用中小模型</li>
+    </ul>
+
+    <div class="highlight-block">
+        <p>LLM-Wiki 需要 API Key 和 Token 费用，但由于渐进式加载和结构化查询优先的设计，<span class="emphasis">实际 Token 消耗远低于 Naive RAG</span>。加上零基础设施成本（无需服务器、无需向量库），总体拥有成本更低。</p>
+    </div>
+</div>
+
+<!-- ===== 09 参考资料 ===== -->
+<div class="section">
+    <div class="section-title">09  参考资料</div>
+
+    <p class="para emphasis">LLM-Wiki 概念与模式</p>
+
+    <div class="ref-item">
+        <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f" target="_blank">Andrej Karpathy — LLM Wiki (GitHub Gist)</a>
+        <div><span class="label label-blue">原始概念</span></div>
+        <div class="ref-desc">Karpathy 首次提出 LLM-Wiki 模式的原始 gist，阐述了用 AI 维护 Markdown 知识库的核心思想</div>
+    </div>
+
+    <div class="ref-item">
+        <a href="https://zhuanlan.zhihu.com/p/1996724780209047225" target="_blank">2026 最新 Claude Skills 保姆级教程及实践</a>
+        <div><span class="label label-blue">Skill 安装</span></div>
+        <div class="ref-desc">Claude Skills 的完整安装教程，涵盖从环境配置到自定义 Skill 开发的实践指南</div>
+    </div>
+
+    <div class="ref-item">
+        <a href="https://zhuanlan.zhihu.com/p/2034659438850750016" target="_blank">Claude Code Skills 完全指南（2026 最新版）</a>
+        <div><span class="label label-blue">完全指南</span></div>
+        <div class="ref-desc">Claude Code Skills 的中文完整指南，涵盖目录结构、配置文件、工作流等</div>
+    </div>
+
+    <div class="ref-item">
+        <a href="https://code.claude.com/docs/zh-CN/skills" target="_blank">使用 Skills 扩展 Claude（官方中文文档）</a>
+        <div><span class="label label-blue">官方文档</span></div>
+        <div class="ref-desc">Claude Code 官方中文 Skills 文档，介绍如何安装和开发自定义 Skills</div>
+    </div>
+
+    <p class="para emphasis" style="margin-top: 24px;">深入实践</p>
+
+    <div class="ref-item">
+        <a href="https://zhuanlan.zhihu.com/p/1987581624360145862" target="_blank">终于有人把 Claude Skills 官方教程讲清楚了（附完整实践）</a>
+        <div><span class="label label-blue">实践案例</span></div>
+        <div class="ref-desc">基于 Claude Skills 的完整实践，从理论到实际开发的端到端教程</div>
+    </div>
+
+    <div class="ref-item">
+        <a href="https://www.cnblogs.com/javastack/p/19176207" target="_blank">MCP 不香了，Claude Code 又推出了 Skills</a>
+        <div><span class="label label-blue">方案对比</span></div>
+        <div class="ref-desc">Claude Code Skills 与 MCP 的对比分析，帮助理解两种扩展方式的适用场景</div>
+    </div>
+
+    <div class="ref-item">
+        <a href="https://www.53ai.com/news/LargeLanguageModel/2026010976504.html" target="_blank">Claude Code Skills 国内实践全指南：从安装部署到高阶开发</a>
+        <div><span class="label label-blue">国内实践</span></div>
+        <div class="ref-desc">面向国内开发者的 Claude Code Skills 完整实践，包含 API 配置、Skills 开发和部署</div>
+    </div>
+
+    <p class="para emphasis" style="margin-top: 24px;">工具与生态</p>
+
+    <div class="ref-item">
+        <a href="https://developer.qiniu.com/aitokenapi/13414/tools-claude-code-skill-introduce" target="_blank">Claude Code Skills 使用指南 — 七牛开发者中心</a>
+        <div><span class="label label-blue">工具</span></div>
+        <div class="ref-desc">Claude Code Skills 的使用指南，涵盖安装、配置和常见使用场景</div>
+    </div>
+
+    <div class="ref-item">
+        <a href="https://datawhalechina.github.io/easy-vibe/zh-cn/stage-3/core-skills/skills/" target="_blank">Claude Code Skills 完全指南 — Datawhale</a>
+        <div><span class="label label-blue">生态</span></div>
+        <div class="ref-desc">Datawhale 开源社区的 Claude Code Skills 指南，包含学习路径和实践建议</div>
+    </div>
+</div>
+
+<!-- ===== 底部 ===== -->
+<div class="footer">
+    <div class="footer-line"></div>
+    <p>LLM-Wiki 个人知识库 · 基于大语言模型 · Git 版本控制</p>
+    <p style="margin-top: 4px; font-size: 12px;">Karpathy 模式 · 来源可追溯 · AI 自我维护</p>
+</div>
+
+</div>
+</body>
+</html>
