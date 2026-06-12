@@ -1,0 +1,75 @@
+site_name: Android/System Knowledge Base
+site_description: Android Framework and system software knowledge base for team reuse.
+docs_dir: wiki
+site_dir: site
+
+repo_url: https://github.com/andywangxu/knowledgebase
+repo_name: andywangxu/knowledgebase
+
+use_directory_urls: true
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: blue grey
+      accent: blue
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+
+nav:
+  - 首页: index.md
+  - 搜索指南: search.md
+  - 场景 Scenarios:
+      - System Server 稳定性: scenarios/system-server-stability.md
+      - ANR / Freeze / 卡死: scenarios/anr-freeze.md
+      - Boot 阶段问题: scenarios/boot-issues.md
+      - Binder 调用链: scenarios/binder-call-chain.md
+      - 权限 / AppOps / 多用户: scenarios/permission-appops-multiuser.md
+      - Window / Display / Surface: scenarios/window-display-surface.md
+  - 知识资产 Assets:
+      - 总览: assets/index.md
+      - 排障方法: assets/troubleshooting/index.md
+      - 架构链路: assets/architecture/index.md
+      - 项目复盘: assets/postmortems/index.md
+      - Checklist: assets/checklists/index.md
+  - 资料 Materials:
+      - 总览: materials/index.md
+      - 操作与分析资料:
+          - 总览: materials/operations/index.md
+          - GPS & 惯导打点数据分析: materials/operations/gps-ins-data-analysis.md
+      - 三方资料: materials/vendor-docs/index.md
+      - 项目资料: materials/project-docs/index.md
+      - 外部参考: materials/references/index.md
+  - 来源 Sources: sources/index.md
+  - 技术领域 Domains: domains/index.md
+  - 维护区:
+      - Triage 报告: reports/triage/index.md
+      - Triage 工作流: workflows/triage.md
+      - Workflows: workflows/index.md
+  - 团队提交: team-submission.md

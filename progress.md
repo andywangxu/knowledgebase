@@ -206,3 +206,33 @@
 - `PYTHONPATH=tools python3 -m unittest tools/test_wiki_lint_lite.py -v`：7 个测试通过。
 - `python3 tools/wiki_lint_lite.py`：0 error，12 warning；warning 均为旧模板缺少建议字段 `schema_version` / `domains`，第一版暂不顺手修改。
 - `python3 tools/wiki_lint_lite.py --path wiki/reports/triage`：0 error，0 warning。
+
+### 会话：MkDocs Material 知识库 UI 实施
+
+已开始：
+
+1. 根据 `docs/superpowers/specs/2026-06-12-mkdocs-material-wiki-ui-design.md` 实施第一版浏览器 UI。
+2. 实施范围限定为 MkDocs Material 本地站点配置、导航入口、UI 验证测试和使用说明。
+3. 第一版直接使用现有 `wiki/` 作为 MkDocs `docs_dir`，不搬迁内容，不引入数据库，不提供在线编辑。
+
+当前状态：
+
+- 正在创建 MkDocs Material 配置、导航索引页和验证测试。
+
+### 会话：MkDocs Material 知识库 UI 实施完成
+
+已完成：
+
+1. 创建 `requirements.txt`，声明 MkDocs Material 依赖。
+2. 创建 `mkdocs.yml`，直接使用现有 `wiki/` 作为 `docs_dir`。
+3. 创建 `tools/test_mkdocs_wiki_ui.py`，验证 UI 配置和关键导航页面。
+4. 创建 assets/materials/sources/reports/workflows/templates 等浏览器导航索引页。
+5. 更新 `wiki/index.md` 和 `wiki/search.md`，面向浏览器 UI 优化入口和搜索说明。
+6. 更新 `CLAUDE.md`，记录本地 UI 运行命令和边界。
+7. 已完成 MkDocs build 验证，并确认 GPS/GNSS/惯导 material 页面可生成 HTML。
+
+当前状态：
+
+- 知识库可通过 `mkdocs serve` 本地启动浏览器 UI。
+- 第一版 UI 只读，不提供在线编辑、权限、发布或自动入库。
+- `wiki/` 仍是唯一正式知识源。

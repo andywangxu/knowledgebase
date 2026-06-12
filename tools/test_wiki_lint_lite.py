@@ -115,6 +115,14 @@ class WikiLintLiteTest(unittest.TestCase):
 
         self.assertTrue(any("missing frontmatter" in error for error in result.errors))
 
+    def test_navigation_index_pages_do_not_require_frontmatter(self):
+        index = self.root / "wiki/materials/index.md"
+        index.write_text("# Materials\n", encoding="utf-8")
+
+        result = wiki_lint_lite.run_lint(paths=[Path("wiki/materials")], strict=False)
+
+        self.assertFalse(any("wiki/materials/index.md: missing frontmatter" in error for error in result.errors))
+
     def test_broken_local_link_is_error(self):
         page = self.root / "wiki/materials/references/link-page.md"
         page.write_text(

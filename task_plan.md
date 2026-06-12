@@ -27,10 +27,11 @@
 | 9. 半自动 LLM-Wiki 增强实施 | complete | 已创建 triage workflow、wiki-triage 命令、domains/reports 入口和轻量 lint 工具。 |
 | 9. 半自动 LLM-Wiki 增强设计 | complete | 已写入 `docs/superpowers/specs/2026-06-12-semi-automatic-llm-wiki-enhancement-design.md`。 |
 | 10. 半自动 LLM-Wiki 增强实施计划 | complete | 已写入 `docs/superpowers/plans/2026-06-12-semi-automatic-llm-wiki-enhancement.md`。 |
+| 11. MkDocs Material 知识库 UI 实施 | complete | 已创建 MkDocs Material 浏览器 UI 配置、导航入口、搜索说明和验证测试。 |
 
 ## 当前阶段
 
-半自动 LLM-Wiki 增强实施已完成：已创建 triage workflow、wiki-triage 命令、domains/reports 入口、模板、轻量 lint 工具和测试。
+MkDocs Material 知识库 UI 实施已完成：当前 `wiki/` 可通过 MkDocs Material 在浏览器中本地浏览和搜索，第一版保持只读，不自动发布。
 
 ## 决策记录
 

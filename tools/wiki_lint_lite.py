@@ -41,7 +41,20 @@ INDEX_PAGES_WITHOUT_FRONTMATTER = {
     Path("wiki/modules.md"),
     Path("wiki/projects.md"),
     Path("wiki/vendors.md"),
+    Path("wiki/assets/index.md"),
+    Path("wiki/assets/troubleshooting/index.md"),
+    Path("wiki/assets/architecture/index.md"),
+    Path("wiki/assets/postmortems/index.md"),
+    Path("wiki/assets/checklists/index.md"),
+    Path("wiki/materials/index.md"),
+    Path("wiki/materials/operations/index.md"),
+    Path("wiki/materials/vendor-docs/index.md"),
+    Path("wiki/materials/project-docs/index.md"),
+    Path("wiki/materials/references/index.md"),
+    Path("wiki/sources/index.md"),
     Path("wiki/domains/index.md"),
+    Path("wiki/reports/index.md"),
+    Path("wiki/reports/triage/index.md"),
 }
 
 ALLOWED_TYPES = {

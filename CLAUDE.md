@@ -126,3 +126,39 @@ python3 tools/wiki_lint_lite.py --path wiki/reports/triage
 # Run lint tool tests
 PYTHONPATH=tools python3 -m unittest tools/test_wiki_lint_lite.py -v
 ```
+
+## MkDocs Material Wiki UI
+
+This repository can be viewed through a local MkDocs Material browser UI.
+
+Key files:
+
+- `mkdocs.yml` — MkDocs site configuration using `docs_dir: wiki`.
+- `requirements.txt` — Python dependencies for the local documentation site.
+- `wiki/index.md` — browser-facing knowledge base homepage.
+- `wiki/search.md` — browser, AI, and manual search guidance.
+
+Useful commands:
+
+```bash
+# Install UI dependencies
+pip install -r requirements.txt
+
+# Start the local browser UI
+mkdocs serve
+# then open http://127.0.0.1:8000
+
+# Build the static site locally
+mkdocs build
+
+# Run UI smoke tests
+python3 -m unittest tools/test_mkdocs_wiki_ui.py -v
+```
+
+Important boundaries:
+
+- The MkDocs UI is read-only.
+- Do not move `inbox/` or `raw/` files as part of UI work.
+- Do not automatically change any page to `status: active`.
+- Do not publish the site externally without reviewing sensitive materials.
+- `raw/` and `inbox/` are not part of the MkDocs `docs_dir`; team-facing pages should live under `wiki/`.
