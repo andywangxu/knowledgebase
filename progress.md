@@ -180,3 +180,29 @@
 当前状态：
 
 - 正在创建 workflow、模板、命令和 lint 工具。
+
+### 会话：半自动 LLM-Wiki 增强实施完成
+
+已完成：
+
+1. 创建 `wiki/workflows/triage.md`，记录半自动 triage 流程和人工确认边界。
+2. 创建 `.claude/commands/wiki-triage.md`，定义 `/wiki-triage` 第一版行为。
+3. 创建 `wiki/reports/triage/`，用于保存 triage 报告。
+4. 创建 `wiki/domains/` 和 `wiki/domains/index.md`，用于管理相关和前沿技术领域。
+5. 创建 `wiki/templates/triage-report.md` 和 `wiki/templates/domain.md`。
+6. 创建 `tools/wiki_lint_lite.py` 和 `tools/test_wiki_lint_lite.py`。
+7. 更新 `wiki/index.md`、`wiki/search.md` 和 `CLAUDE.md`，纳入新 workflow 和工具说明。
+8. 完成单元测试和轻量 lint 验证。
+
+当前状态：
+
+- 半自动 LLM-Wiki 增强第一版完成，当前改动保留在本地工作区，尚未提交或 push。
+- 第一版正式支持 triage `inbox/*.md`。
+- `raw/` 保留为原始资料目录，但不直接参与第一版 `/wiki-triage` 自动处理。
+- 正式入库、移动文件、active 状态、提交和发布仍需人工确认。
+
+验证结果：
+
+- `PYTHONPATH=tools python3 -m unittest tools/test_wiki_lint_lite.py -v`：7 个测试通过。
+- `python3 tools/wiki_lint_lite.py`：0 error，12 warning；warning 均为旧模板缺少建议字段 `schema_version` / `domains`，第一版暂不顺手修改。
+- `python3 tools/wiki_lint_lite.py --path wiki/reports/triage`：0 error，0 warning。

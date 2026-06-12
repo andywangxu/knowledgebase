@@ -13,10 +13,11 @@
 AI 应按以下顺序查找：
 
 1. 阅读本文件，理解搜索规则。
-2. 查 `vendors.md`、`modules.md`、`tags.md`、`projects.md`。
-3. 全文搜索 `materials/`、`sources/`、`assets/`。
-4. 如需要，再回溯 `../raw/`。
-5. 返回资料位置、摘要、适用场景和来源。
+2. 查 `domains/index.md`、`vendors.md`、`modules.md`、`tags.md`、`projects.md`。
+3. 全文搜索 `materials/`、`sources/`、`assets/`、`domains/`。
+4. 如果问题与待处理输入或过程判断有关，再查 `reports/triage/`。
+5. 如需要，并且用户明确允许，再回溯 `../raw/`。
+6. 返回资料位置、摘要、适用场景和来源；区分正式页面、草稿页面、triage 建议和原始材料。
 
 ## 人工搜索命令
 
@@ -32,6 +33,12 @@ rg "VendorX" wiki/
 
 # 搜所有 material
 rg "type: material" wiki/
+
+# 搜技术领域
+rg "llm-agent-workflow|engineering-practice" wiki/domains wiki/assets wiki/materials wiki/sources
+
+# 搜 triage 报告
+rg "recommended_actions|pending-review|watch" wiki/reports/triage
 
 # 搜所有 active 页面
 rg "status: active" wiki/

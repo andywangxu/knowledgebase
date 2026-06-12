@@ -24,13 +24,13 @@
 | 6. 发布到 GitHub | complete | 用户手动将远端改为 SSH 并成功执行 `git push -u origin main`；远端 `main` 分支已创建并跟踪。 |
 | 7. 实施计划 | complete | 已写入 `docs/superpowers/plans/2026-06-12-android-framework-knowledge-base-scaffold.md`，用于创建第一阶段 Markdown 脚手架。 |
 | 8. 第一阶段脚手架实施 | complete | 已创建 inbox/raw/wiki 目录、索引页、模板和搜索说明。 |
-| 9. 半自动 LLM-Wiki 增强实施 | in_progress | 正在创建 triage workflow、wiki-triage 命令、domains/reports 入口和轻量 lint 工具。 |
+| 9. 半自动 LLM-Wiki 增强实施 | complete | 已创建 triage workflow、wiki-triage 命令、domains/reports 入口和轻量 lint 工具。 |
 | 9. 半自动 LLM-Wiki 增强设计 | complete | 已写入 `docs/superpowers/specs/2026-06-12-semi-automatic-llm-wiki-enhancement-design.md`。 |
 | 10. 半自动 LLM-Wiki 增强实施计划 | complete | 已写入 `docs/superpowers/plans/2026-06-12-semi-automatic-llm-wiki-enhancement.md`。 |
 
 ## 当前阶段
 
-半自动 LLM-Wiki 增强实施进行中：基于已批准设计，正在创建 triage workflow、wiki-triage 命令、domains/reports 入口和轻量 lint 工具。
+半自动 LLM-Wiki 增强实施已完成：已创建 triage workflow、wiki-triage 命令、domains/reports 入口、模板、轻量 lint 工具和测试。
 
 ## 决策记录
 

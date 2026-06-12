@@ -92,3 +92,37 @@ rg "type: asset" wiki/
 # Find pages for a module or vendor
 rg "Display|VendorName" wiki/
 ```
+
+## Semi-Automatic LLM-Wiki Enhancement
+
+This repository includes a first-version semi-automatic LLM-Wiki workflow.
+
+Key files:
+
+- `.claude/commands/wiki-triage.md` — Claude command guidance for triaging `inbox/*.md` inputs.
+- `wiki/workflows/triage.md` — human-readable triage process and safety boundaries.
+- `wiki/reports/triage/` — generated triage reports awaiting human review.
+- `wiki/domains/` — technology domain index for Android/System-adjacent and frontier topics.
+- `tools/wiki_lint_lite.py` — read-only structure and metadata checks.
+
+Important boundaries:
+
+- `/wiki-triage` supports `inbox/*.md` as the first-version formal input.
+- `raw/` remains the original-material directory, but raw files should be summarized into `inbox/*.md` before triage.
+- Triage reports are process records, not formal knowledge assets.
+- Do not automatically promote triage output into `wiki/assets/`, `wiki/materials/`, `wiki/sources/`, or `wiki/domains/`.
+- Do not automatically move `inbox/` or `raw/` files.
+- Do not automatically change any page to `status: active`.
+
+Useful commands:
+
+```bash
+# Run all lightweight Wiki checks
+python3 tools/wiki_lint_lite.py
+
+# Check only triage reports
+python3 tools/wiki_lint_lite.py --path wiki/reports/triage
+
+# Run lint tool tests
+PYTHONPATH=tools python3 -m unittest tools/test_wiki_lint_lite.py -v
+```

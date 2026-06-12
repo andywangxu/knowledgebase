@@ -11,6 +11,9 @@
 - 想找使用文档、操作说明、三方资料：看 [materials](materials/)。
 - 不知道资料在哪里：先看 [search.md](search.md)。
 - 想了解准入规则：看 [principles.md](principles.md)。
+- 想按技术领域或前沿方向查找：看 [domains](domains/)。
+- 想处理 inbox 输入材料：先看 [triage 工作流](workflows/triage.md)。
+- 想查看 triage 过程记录：看 [reports/triage](reports/triage/)。
 
 ## 首批场景
 
@@ -28,3 +31,6 @@
 - [模块索引](modules.md)
 - [项目索引](projects.md)
 - [三方/供应商索引](vendors.md)
+- [技术领域索引](domains/index.md)
+- [Triage 工作流](workflows/triage.md)
+- [Triage 报告目录](reports/triage/)
