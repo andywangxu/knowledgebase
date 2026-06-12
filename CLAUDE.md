@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This repository currently contains a single static HTML document, `llm-wiki.html`, written in Chinese. It is a self-contained guide for the LLM-Wiki personal knowledge base workflow.
+This repository contains an Android Framework knowledge base scaffold plus `llm-wiki.html`, a self-contained Chinese reference page for the LLM-Wiki personal knowledge base workflow.
 
 The file includes:
 
@@ -16,7 +16,7 @@ There is no detected README, package manager config, test framework, Cursor rule
 
 ## Common Commands
 
-Because this is currently a static HTML-only repository, there are no project-specific build, lint, or test commands.
+Because this repository currently has no package manifest, build system, or test framework, there are no project-specific build, lint, or test commands.
 
 Useful local commands:
 
@@ -44,7 +44,7 @@ python3 -m http.server 8000
   - `.numbered-list`, `.no-bullet-list`, and `.flow-steps` for structured content.
 - Responsive behavior is handled by a small media query for screens under 480px.
 
-The document content describes the LLM-Wiki concept and workflow rather than implementing the workflow itself. The guide references a possible LLM-Wiki project layout (`raw/`, `wiki/`, `graph/`, `tools/`, `data/`, `.claude/commands/`), but those directories are not present in this repository at the time this file was created.
+The document content describes the LLM-Wiki concept and workflow as a reference page, while the repository scaffold now provides starting knowledge-base directories such as `inbox/`, `raw/`, and `wiki/`.
 
 ## Editing Guidance
 
