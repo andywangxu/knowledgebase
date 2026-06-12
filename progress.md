@@ -105,3 +105,14 @@
 错误记录：
 
 - `git status --short` 返回：当前目录不是 Git 仓库。这影响后续技能中“提交设计文档”的步骤，需要在写设计文档前与用户确认是否初始化 Git 或跳过提交。
+
+### 会话：第一阶段知识库脚手架实施
+
+已开始：
+
+1. 根据 `docs/superpowers/specs/2026-06-12-android-framework-knowledge-base-design.md` 和 `docs/superpowers/plans/2026-06-12-android-framework-knowledge-base-scaffold.md` 创建第一阶段 Markdown 脚手架。
+2. 实施范围限定为目录、入口页、索引页、模板和搜索说明；不迁移历史资料，不编写真正 Android Framework 内容，不引入复杂自动化。
+
+当前状态：
+
+- 正在创建基础目录和模板文件。
