@@ -54,3 +54,41 @@ When modifying the page:
 - Preserve the Chinese article structure and section numbering unless the content itself is being reorganized.
 - Reuse existing CSS component classes before adding new styles.
 - Do not add build/test commands to this file unless corresponding tooling is actually added to the repository.
+
+## Knowledge Base Operating Model
+
+This repository is evolving into an Android Framework knowledge base.
+
+Primary layers:
+
+- `inbox/` — low-friction team submissions; content here is not formal Wiki knowledge yet.
+- `raw/` — original files and source material; preserve context and avoid rewriting originals.
+- `wiki/scenarios/` — scenario entry pages for common Android Framework work contexts.
+- `wiki/assets/` — curated reusable knowledge: troubleshooting, architecture, postmortems, checklists.
+- `wiki/materials/` — controlled reference materials: operations docs, vendor docs, project docs, references.
+- `wiki/sources/` — structured summaries of original material.
+- `wiki/templates/` — templates for creating new assets, materials, and source summaries.
+
+Content rules:
+
+- Do not move rough team submissions directly into `wiki/assets/`.
+- Assets must include at least: one-line conclusion, applicability, and source.
+- Materials must include searchable metadata in frontmatter.
+- Prefer linking to `raw/` or `wiki/sources/` instead of copying large original documents into Wiki pages.
+- Keep the first phase small: prioritize high-frequency, high-impact, reusable content.
+
+Useful commands:
+
+```bash
+# Search all wiki content
+rg "keyword" wiki/
+
+# Find materials
+rg "type: material" wiki/
+
+# Find assets
+rg "type: asset" wiki/
+
+# Find pages for a module or vendor
+rg "Display|VendorName" wiki/
+```
