@@ -23,11 +23,11 @@
 | 5. 接入 GitHub 仓库 | complete | 当前目录已初始化 Git，已创建 `main` 分支并添加远端 `https://github.com/andywangxu/knowledgebase.git`；本地初始提交 `7c9cffa` 已创建，尚未 push。 |
 | 6. 发布到 GitHub | complete | 用户手动将远端改为 SSH 并成功执行 `git push -u origin main`；远端 `main` 分支已创建并跟踪。 |
 | 7. 实施计划 | complete | 已写入 `docs/superpowers/plans/2026-06-12-android-framework-knowledge-base-scaffold.md`，用于创建第一阶段 Markdown 脚手架。 |
-| 8. 第一阶段脚手架实施 | in_progress | 正在创建 inbox/raw/wiki 目录、索引页、模板和搜索说明。 |
+| 8. 第一阶段脚手架实施 | complete | 已创建 inbox/raw/wiki 目录、索引页、模板和搜索说明。 |
 
 ## 当前阶段
 
-第一阶段脚手架实施进行中：已选择 Subagent-Driven 执行方式，正在创建 inbox/raw/wiki 目录、索引页、模板和搜索说明。
+第一阶段脚手架实施已完成：已创建 inbox/raw/wiki 目录、索引页、模板和搜索说明，并完成一致性验证。
 
 ## 决策记录
 
