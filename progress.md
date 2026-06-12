@@ -77,10 +77,11 @@
 36. 已添加远端 `origin`：`https://github.com/andywangxu/knowledgebase.git`。
 37. 已创建本地初始提交：`7c9cffa Initial knowledge base design`。
 38. 当前尚未 push 到 GitHub。
+39. 用户确认可以执行发布到 GitHub。
 
 当前状态：
 
-- Git 仓库已初始化，`main` 分支和远端已配置；本地初始提交已创建；尚未 push。
+- 准备执行 `git push -u origin main` 发布到 GitHub。
 
 错误记录：
 
