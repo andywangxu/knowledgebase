@@ -75,11 +75,12 @@
 34. 用户确认远端为空仓库，并选择方案 A：在当前目录初始化 Git 并绑定远端。
 35. 已执行 `git init`，但 `git branch -M main` 在空仓库无提交时失败：`refname refs/heads/master not found`。已改用 `git checkout -b main` 创建初始分支。
 36. 已添加远端 `origin`：`https://github.com/andywangxu/knowledgebase.git`。
-37. 准备创建本地初始提交；尚未 push。
+37. 已创建本地初始提交：`7c9cffa Initial knowledge base design`。
+38. 当前尚未 push 到 GitHub。
 
 当前状态：
 
-- Git 仓库已初始化，`main` 分支和远端已配置；下一步创建本地初始提交；尚未 push。
+- Git 仓库已初始化，`main` 分支和远端已配置；本地初始提交已创建；尚未 push。
 
 错误记录：
 

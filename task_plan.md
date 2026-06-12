@@ -20,7 +20,7 @@
 | 2. Android Framework 知识库设计澄清 | complete | 已确认定位、内容分层、准入标准、搜索方式、维护节奏和成功指标。 |
 | 3. 写入设计文档 | complete | 已写入 `docs/superpowers/specs/2026-06-12-android-framework-knowledge-base-design.md`。 |
 | 4. 用户审阅设计文档 | complete | 用户确认按修正版写入设计文档。 |
-| 5. 接入 GitHub 仓库 | in_progress | 当前目录已初始化 Git，已创建 `main` 分支并添加远端 `https://github.com/andywangxu/knowledgebase.git`；准备创建本地初始提交，尚未 push。 |
+| 5. 接入 GitHub 仓库 | complete | 当前目录已初始化 Git，已创建 `main` 分支并添加远端 `https://github.com/andywangxu/knowledgebase.git`；本地初始提交 `7c9cffa` 已创建，尚未 push。 |
 | 6. 实施计划 | pending | 用户确认设计文档并完成 Git 接入后，再进入实施计划阶段。 |
 
 ## 当前阶段
